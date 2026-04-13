@@ -22,48 +22,59 @@ video{width:100%;height:100%;object-fit:cover;display:block}
 .frame{width:200px;height:200px;border:2px solid rgba(255,255,255,.5);border-radius:14px;box-shadow:0 0 0 9999px rgba(0,0,0,.35)}
 .hint{font-size:12px;color:rgba(255,255,255,.65);text-align:center;padding:0 20px}
 .btn-row{padding:12px;display:flex;gap:8px}
-.btn{flex:1;border:none;border-radius:11px;padding:13px 8px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s}
+.btn{flex:1;border:none;border-radius:11px;padding:13px 8px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s}
 .btn:active{opacity:.7}
 .btn:disabled{opacity:.3;cursor:not-allowed}
 .btn-blue{background:#3d7ef5;color:#fff}
 .btn-green{background:#22c55e;color:#fff}
 .upload-label{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 14px;margin:0 12px 12px;border:1px dashed #2a2d3a;border-radius:10px;font-size:13px;color:#555;cursor:pointer}
 .upload-label input{display:none}
+.clarify-card{background:#161921;border:1px solid #2a2060;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.clarify-title{font-size:13px;color:#a78bfa;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.clarify-desc{font-size:12px;color:#555;line-height:1.5}
+.clarify-input{background:#0a0c12;border:1px solid #2a2d3a;border-radius:10px;padding:10px 12px;color:#f0f0f0;font-size:14px;width:100%;outline:none;resize:none;font-family:inherit;line-height:1.5}
+.clarify-input:focus{border-color:#7c3aed}
+.clarify-input::placeholder{color:#444}
+.clarify-btn{background:#7c3aed;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;transition:opacity .15s}
+.clarify-btn:active{opacity:.7}
+.clarify-btn:disabled{opacity:.3;cursor:not-allowed}
 .loading{display:none;align-items:center;justify-content:center;gap:10px;padding:20px;font-size:14px;color:#555}
 .loading.on{display:flex}
 .spin{width:22px;height:22px;border:2px solid #1e2130;border-top-color:#3d7ef5;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 .result{display:none}
 .result.on{display:block}
-.result-head{padding:18px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #1e2230}
-.result-head.green{background:#081f10}
-.result-head.red{background:#1f0808}
-.result-head.orange{background:#1f1208}
-.result-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
-.result-icon.green{background:#0f3a1a}
-.result-icon.red{background:#3a0f0f}
-.result-icon.orange{background:#3a2a0f}
-.verdict{font-size:22px;font-weight:700;line-height:1.2}
+.rhead{padding:18px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #1e2230}
+.rhead.green{background:#081f10}
+.rhead.red{background:#1f0808}
+.rhead.orange{background:#1f1208}
+.ricon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.ricon.green{background:#0f3a1a}
+.ricon.red{background:#3a0f0f}
+.ricon.orange{background:#3a2a0f}
+.verdict{font-size:21px;font-weight:700;line-height:1.2}
 .verdict.green{color:#4ade80}
 .verdict.red{color:#f87171}
 .verdict.orange{color:#fb923c}
-.obj-name{font-size:13px;color:#555;margin-top:4px}
-.result-body{padding:14px;display:flex;flex-direction:column;gap:10px}
-.preview-img{width:100%;border-radius:10px;max-height:140px;object-fit:cover;display:none}
-.preview-img.on{display:block}
+.oname{font-size:13px;color:#555;margin-top:4px}
+.rbody{padding:14px;display:flex;flex-direction:column;gap:10px}
+.pimg{width:100%;border-radius:10px;max-height:140px;object-fit:cover;display:none}
+.pimg.on{display:block}
 .badges{display:flex;gap:6px;flex-wrap:wrap}
 .badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.badge-conf{background:#1a2030;color:#7eb8f7}
-.badge-yes{background:#0a2010;color:#4ade80}
-.badge-no{background:#200a0a;color:#f87171}
-.badge-warn{background:#201a0a;color:#fb923c}
-.info-box{background:#0a0c12;border:1px solid #1a1d26;border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.65;color:#bbb}
-.info-box b{display:block;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;font-weight:600}
-.tip-box{border-left:3px solid #3d7ef5;padding:10px 12px;font-size:12px;color:#7eb8f7;line-height:1.6}
-.err-box{display:none;background:#1f0808;border:1px solid #4a1010;border-radius:12px;padding:14px;font-size:13px;color:#f87171;line-height:1.5}
-.err-box.on{display:block}
-.model-status{text-align:center;padding:10px;font-size:12px;color:#444}
-.model-status.ready{color:#4ade80}
+.b-conf{background:#1a2030;color:#7eb8f7}
+.b-yes{background:#0a2010;color:#4ade80}
+.b-no{background:#200a0a;color:#f87171}
+.b-warn{background:#201a0a;color:#fb923c}
+.b-ai{background:#100a20;color:#a78bfa}
+.ibox{background:#0a0c12;border:1px solid #1a1d26;border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.65;color:#bbb}
+.ibox b{display:block;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;font-weight:600}
+.tbox{border-left:3px solid #3d7ef5;padding:10px 12px;font-size:12px;color:#7eb8f7;line-height:1.6}
+.ebox{display:none;background:#1f0808;border:1px solid #4a1010;border-radius:12px;padding:14px;font-size:13px;color:#f87171;line-height:1.5}
+.ebox.on{display:block}
+.mstatus{text-align:center;padding:8px;font-size:12px;color:#444}
+.mstatus.ready{color:#4ade80}
+.src{font-size:10px;color:#333;text-align:right;padding:4px 14px 8px}
 footer{text-align:center;font-size:11px;color:#252830;padding:4px}
 </style>
 </head>
@@ -78,12 +89,12 @@ footer{text-align:center;font-size:11px;color:#252830;padding:4px}
   </svg>
   <div>
     <h1>Сканер пластика</h1>
-    <p>AI работает прямо в браузере · без интернета</p>
+    <p>AI в браузере + Gemini для уточнений</p>
   </div>
 </header>
 
 <div class="page">
-  <div class="model-status" id="modelStatus">Загрузка AI модели...</div>
+  <div class="mstatus" id="mstatus">Загрузка AI модели (~5 МБ)...</div>
 
   <div class="card">
     <div class="cam-wrap">
@@ -94,21 +105,21 @@ footer{text-align:center;font-size:11px;color:#252830;padding:4px}
           <circle cx="22" cy="24" r="3.5" fill="#222"/>
           <path d="M16 12L18.5 8H25.5L28 12" stroke="#444" stroke-width="1.5"/>
         </svg>
-        <p>Нажмите «Включить камеру»</p>
+        <p>Нажмите «Камера»</p>
       </div>
       <video id="video" autoplay playsinline style="display:none"></video>
       <div class="overlay" id="overlay">
         <div class="frame"></div>
-        <div class="hint">Наведите на пластиковый предмет</div>
+        <div class="hint">Наведите на предмет и нажмите «Сканировать»</div>
       </div>
     </div>
     <div class="btn-row">
       <button class="btn btn-blue" id="btnStart" onclick="startCam()">
-        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        Включить камеру
+        <svg width="15" height="15" fill="white" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        Камера
       </button>
       <button class="btn btn-green" id="btnScan" onclick="scan()" disabled>
-        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        <svg width="15" height="15" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
         Сканировать
       </button>
     </div>
@@ -119,282 +130,352 @@ footer{text-align:center;font-size:11px;color:#252830;padding:4px}
     </label>
   </div>
 
-  <div class="loading" id="loading">
-    <div class="spin"></div>Анализирую...
+  <!-- Блок уточнения -->
+  <div class="clarify-card">
+    <div class="clarify-title">Уточнить что на фото</div>
+    <div class="clarify-desc">Если AI ошибся или хотите проверить — напишите что это за предмет, и Gemini скажет можно ли его переработать.</div>
+    <textarea class="clarify-input" id="clarifyText" rows="2"
+      placeholder="Например: одноразовый пластиковый стакан, пенопластовый лоток, пакет от чипсов, крышка от бутылки..."></textarea>
+    <button class="clarify-btn" id="clarifyBtn" onclick="askGemini()">
+      Спросить — можно переработать?
+    </button>
   </div>
-  <div class="err-box" id="errBox"></div>
+
+  <div class="loading" id="loading">
+    <div class="spin"></div><span id="ltxt">Анализирую...</span>
+  </div>
+  <div class="ebox" id="ebox"></div>
 
   <div class="card result" id="result">
-    <div class="result-head" id="resultHead">
-      <div class="result-icon" id="resultIcon"></div>
+    <div class="rhead" id="rhead">
+      <div class="ricon" id="ricon"></div>
       <div>
         <div class="verdict" id="verdict"></div>
-        <div class="obj-name" id="objName"></div>
+        <div class="oname" id="oname"></div>
       </div>
     </div>
-    <div class="result-body">
-      <img class="preview-img" id="preview" alt="">
+    <div class="rbody">
+      <img class="pimg" id="pimg" alt="">
       <div class="badges" id="badges"></div>
-      <div class="info-box" id="infoBox"></div>
-      <div class="tip-box" id="tipBox" style="display:none"></div>
+      <div class="ibox" id="ibox"></div>
+      <div class="tbox" id="tbox" style="display:none"></div>
     </div>
+    <div class="src" id="src"></div>
   </div>
 
-  <footer>Работает офлайн · AI в вашем браузере · данные не передаются</footer>
+  <footer>Офлайн AI + Gemini (1500 запросов/день бесплатно)</footer>
 </div>
 
-<!-- TensorFlow.js + MobileNet -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
-
 <script>
-let model = null;
-let videoStream = null;
+// ── Получите ключ бесплатно на aistudio.google.com/apikey ──
+const GEMINI_KEY = 'AIzaSyBZi1liyDnwWDiGWRV7KgXatsYZAawuEpA';
 
-// Классы ImageNet которые относятся к пластику → можно переработать
-const PLASTIC_RECYCLABLE = [
-  'water bottle','plastic bag','bottle','pop bottle','beer bottle',
-  'wine bottle','water jug','pill bottle','lotion','soap dispenser',
-  'detergent','shampoo','container','bucket','barrel','tank',
-  'jerrycan','plastic','tub','beaker','pitcher'
+let tfModel = null;
+let lastPreview = null;
+
+// Предметы которые точно НЕЛЬЗЯ переработать
+const TRASH_ITEMS = [
+  'cup','coffee cup','paper cup','styrofoam','foam','polystyrene',
+  'disposable','plastic cup','cup-like','espresso','teacup',
+  'paper plate','napkin','straw','wrapper','chip bag','crisp',
+  'diaper','cigarette','tissue','plastic bag','bag',
+  'bubble wrap','cling wrap','film'
 ];
 
-// Классы которые НЕ пластик или не перерабатываются
+// Предметы которые МОЖНО переработать (пластик)
+const RECYCLE_ITEMS = [
+  'water bottle','pop bottle','bottle','plastic bottle',
+  'pill bottle','lotion','soap','shampoo','detergent',
+  'container','bucket','jug','pitcher','tub','tank',
+  'jerrycan','barrel','canteen','plastic'
+];
+
+// Предметы которые НЕ пластик
 const NOT_PLASTIC = [
   'paper','cardboard','wood','glass','metal','tin','aluminum',
-  'iron','steel','copper','food','fruit','vegetable','organic',
-  'cloth','textile','rubber','stone','rock','concrete','ceramic',
-  'porcelain','soil','dirt','leaf','plant','tree'
+  'iron','steel','copper','food','fruit','vegetable',
+  'cloth','textile','stone','rock','ceramic','porcelain'
 ];
 
-// Загрузка модели
 async function loadModel() {
   try {
-    document.getElementById('modelStatus').textContent = 'Загружаю AI модель (~5 МБ)...';
-    model = await mobilenet.load({version: 2, alpha: 1.0});
-    document.getElementById('modelStatus').textContent = '✓ AI готов к работе';
-    document.getElementById('modelStatus').className = 'model-status ready';
-    document.getElementById('btnScan').disabled = !videoStream;
+    tfModel = await mobilenet.load({version:2, alpha:1.0});
+    document.getElementById('mstatus').textContent = '✓ AI готов';
+    document.getElementById('mstatus').className = 'mstatus ready';
+    if (document.getElementById('video').srcObject)
+      document.getElementById('btnScan').disabled = false;
   } catch(e) {
-    document.getElementById('modelStatus').textContent = 'Ошибка загрузки модели: ' + e.message;
+    document.getElementById('mstatus').textContent = 'Ошибка загрузки: ' + e.message;
   }
 }
 
 async function startCam() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: {ideal:'environment'}, width:{ideal:640} }
+    const s = await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{ideal:'environment'}, width:{ideal:640}}
     });
-    videoStream = stream;
     const v = document.getElementById('video');
-    v.srcObject = stream;
-    v.style.display = 'block';
+    v.srcObject = s; v.style.display = 'block';
     document.getElementById('placeholder').style.display = 'none';
     document.getElementById('overlay').classList.add('on');
-    if (model) document.getElementById('btnScan').disabled = false;
+    if (tfModel) document.getElementById('btnScan').disabled = false;
     const b = document.getElementById('btnStart');
-    b.disabled = true;
-    b.innerHTML = '✓ Камера работает';
+    b.disabled = true; b.textContent = '✓ Работает';
   } catch(e) {
-    showErr('Нет доступа к камере. Разрешите в настройках браузера.');
+    showErr('Нет доступа к камере. Разрешите в настройках браузера и перезагрузите страницу.');
   }
 }
 
-function captureCanvas() {
+async function scan() {
+  if (!tfModel) { showErr('Модель ещё загружается...'); return; }
   const v = document.getElementById('video');
   const c = document.createElement('canvas');
-  c.width = v.videoWidth || 640;
-  c.height = v.videoHeight || 480;
-  c.getContext('2d').drawImage(v, 0, 0);
-  return c;
+  c.width = v.videoWidth||640; c.height = v.videoHeight||480;
+  c.getContext('2d').drawImage(v,0,0);
+  lastPreview = c.toDataURL('image/jpeg',0.85);
+  await runModel(c, lastPreview);
 }
 
-async function scan() {
-  if (!model) { showErr('Модель ещё загружается, подождите...'); return; }
-  const canvas = captureCanvas();
-  const url = canvas.toDataURL('image/jpeg', 0.85);
-  await classify(canvas, url);
-}
-
-async function uploadFile(input) {
-  const file = input.files[0];
-  if (!file) return;
+async function uploadFile(inp) {
+  const file = inp.files[0]; if(!file) return;
   const img = new Image();
   img.onload = async () => {
     const c = document.createElement('canvas');
     c.width = img.width; c.height = img.height;
-    c.getContext('2d').drawImage(img, 0, 0);
-    await classify(c, img.src);
+    c.getContext('2d').drawImage(img,0,0);
+    lastPreview = c.toDataURL('image/jpeg',0.85);
+    if (tfModel) await runModel(c, lastPreview);
+    else showErr('Подождите пока загрузится AI модель');
   };
   img.src = URL.createObjectURL(file);
 }
 
-async function classify(canvas, previewUrl) {
-  if (!model) return;
-  setLoading(true);
-  document.getElementById('result').className = 'card result';
-  document.getElementById('errBox').className = 'err-box';
+async function runModel(canvas, previewUrl) {
+  setLoad(true,'Анализирую...');
+  hideAll();
+  try {
+    const preds = await tfModel.classify(canvas, 7);
+    setLoad(false);
+    const r = analyze(preds);
+    r.source = 'local';
+    show(r, previewUrl);
+  } catch(e) {
+    setLoad(false); showErr('Ошибка: '+e.message);
+  }
+}
+
+function analyze(preds) {
+  let trashScore=0, recycleScore=0, notPlasticScore=0;
+  const top = preds[0];
+  const topLabel = top.className.toLowerCase();
+  const topConf = Math.round(top.probability*100);
+
+  for (const p of preds) {
+    const lbl = p.className.toLowerCase();
+    const prob = p.probability;
+
+    for (const kw of TRASH_ITEMS) {
+      if (lbl.includes(kw)) { trashScore += prob*3; break; }
+    }
+    for (const kw of RECYCLE_ITEMS) {
+      if (lbl.includes(kw)) { recycleScore += prob*3; break; }
+    }
+    for (const kw of NOT_PLASTIC) {
+      if (lbl.includes(kw)) { notPlasticScore += prob; break; }
+    }
+  }
+
+  // Одноразовые стаканы и пенопласт — точно нельзя
+  if (trashScore > 0.2) {
+    return {
+      found:true, recyclable:false, color:'red',
+      verdict:'Нельзя переработать',
+      name_ru: ruLabel(topLabel),
+      confidence: Math.min(topConf+5, 90),
+      instruction:'Выбросить в контейнер для смешанных отходов. Этот тип пластика не принимается в пунктах переработки.',
+      tip:'Одноразовые стаканы, пенопласт и пакеты почти нигде не перерабатываются'
+    };
+  }
+
+  if (recycleScore > 0.3) {
+    return {
+      found:true, recyclable:true, color:'green',
+      verdict:'Можно переработать',
+      name_ru: ruLabel(topLabel),
+      confidence: Math.min(topConf+10, 95),
+      instruction:'Сдать в пункт приёма пластика. Ополоснуть от остатков еды или жидкости.',
+      tip:'Твёрдый пластик с маркировкой #1 (PET) и #2 (HDPE) принимают везде'
+    };
+  }
+
+  if (notPlasticScore > 0.4) {
+    return {
+      found:true, recyclable:null, color:'orange',
+      verdict:'Не пластик — уточните',
+      name_ru: ruLabel(topLabel),
+      confidence: topConf,
+      instruction:'Это похоже не на пластик. Напишите ниже что именно на фото — Gemini даст точный ответ.',
+      tip:'Стекло, металл и картон тоже перерабатываются, но сдаются отдельно'
+    };
+  }
+
+  return {
+    found:true, recyclable:null, color:'orange',
+    verdict:'Не уверен',
+    name_ru: ruLabel(topLabel),
+    confidence: topConf,
+    instruction:'Поднесите предмет ближе на светлом фоне. Или напишите ниже что это — Gemini ответит точно.',
+    tip:'Лучший результат: один предмет крупным планом на светлом фоне'
+  };
+}
+
+// ── Gemini ────────────────────────────────────────────────────────
+async function askGemini() {
+  const text = document.getElementById('clarifyText').value.trim();
+  if (!text) {
+    showErr('Напишите что на фото в поле выше — например: "одноразовый пластиковый стакан"');
+    return;
+  }
+  if (GEMINI_KEY === 'ВСТАВЬТЕ_КЛЮЧ_СЮДА') {
+    showErr('Добавьте Gemini API ключ в код. Получите бесплатно на aistudio.google.com/apikey');
+    return;
+  }
+
+  setLoad(true,'Спрашиваю Gemini AI...');
+  hideAll();
+
+  const prompt = `Ты эксперт по переработке мусора. Пользователь хочет знать можно ли переработать: "${text}"
+
+Ответь СТРОГО в формате JSON без лишнего текста, без markdown:
+{
+  "recyclable": true или false или null,
+  "verdict": "Можно переработать" или "Нельзя переработать" или "Специальная утилизация",
+  "color": "green" или "red" или "orange",
+  "name_ru": "Точное название предмета",
+  "instruction": "Конкретная инструкция что делать с этим предметом (1-2 предложения)",
+  "tip": "Полезный факт об этом материале (1 предложение)"
+}
+
+Примеры правильных ответов:
+- Пластиковая бутылка PET → recyclable: true, verdict: "Можно переработать"
+- Одноразовый стакан → recyclable: false, verdict: "Нельзя переработать"
+- Пенопласт → recyclable: false, verdict: "Нельзя переработать"  
+- Пластиковый пакет → recyclable: false, verdict: "Нельзя переработать"
+- Картонная коробка → recyclable: true, verdict: "Можно переработать"
+- Стеклянная бутылка → recyclable: true, verdict: "Можно переработать"
+- Батарейка → recyclable: null, verdict: "Специальная утилизация"
+- Металлическая банка → recyclable: true, verdict: "Можно переработать"`;
 
   try {
-    // MobileNet возвращает топ-3 предсказания
-    const predictions = await model.classify(canvas, 5);
-    console.log('Predictions:', predictions);
-    setLoading(false);
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          contents:[{parts:[{text:prompt}]}],
+          generationConfig:{maxOutputTokens:400, temperature:0.1}
+        })
+      }
+    );
 
-    if (!predictions || predictions.length === 0) {
-      showResult({found: false, message: 'Не удалось распознать. Попробуйте ещё раз.'}, previewUrl);
-      return;
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.error?.message || 'Ошибка '+resp.status);
     }
 
-    // Анализируем топ предсказания
-    const result = analyzePredictions(predictions);
-    showResult(result, previewUrl);
+    const data = await resp.json();
+    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+    parsed.source = 'gemini';
+    parsed.found = true;
+    parsed.confidence = 98;
+
+    setLoad(false);
+    show(parsed, lastPreview);
 
   } catch(e) {
-    setLoading(false);
-    showErr('Ошибка: ' + e.message);
+    setLoad(false);
+    showErr('Ошибка Gemini: ' + e.message + '. Проверьте API ключ.');
   }
 }
 
-function analyzePredictions(predictions) {
-  let plasticScore = 0;
-  let notPlasticScore = 0;
-  let topLabel = predictions[0].className.toLowerCase();
-  let topConf = Math.round(predictions[0].probability * 100);
-
-  // Проверяем каждое предсказание
-  for (const pred of predictions) {
-    const label = pred.className.toLowerCase();
-    const prob = pred.probability;
-
-    // Проверяем на пластик
-    for (const keyword of PLASTIC_RECYCLABLE) {
-      if (label.includes(keyword)) {
-        plasticScore += prob * 2;
-        break;
-      }
-    }
-
-    // Проверяем на не-пластик
-    for (const keyword of NOT_PLASTIC) {
-      if (label.includes(keyword)) {
-        notPlasticScore += prob;
-        break;
-      }
-    }
-
-    // Специфичные пластиковые предметы ImageNet
-    if (label.includes('bottle') || label.includes('plastic') ||
-        label.includes('container') || label.includes('jug') ||
-        label.includes('bucket') || label.includes('tub')) {
-      plasticScore += prob * 3;
-    }
-  }
-
-  // Результат
-  if (plasticScore > 0.3) {
-    return {
-      found: true,
-      recyclable: true,
-      color: 'green',
-      verdict: 'Можно переработать',
-      name_ru: formatLabel(topLabel),
-      confidence: Math.min(topConf + 10, 95),
-      instruction: 'Сдать в пункт приёма пластика. Ополоснуть от остатков.',
-      tip: 'Большинство твёрдых пластиковых бутылок и контейнеров принимают в пунктах приёма'
-    };
-  } else if (notPlasticScore > 0.3) {
-    return {
-      found: true,
-      recyclable: false,
-      color: 'red',
-      verdict: 'Не пластик',
-      name_ru: formatLabel(topLabel),
-      confidence: topConf,
-      instruction: 'Это не пластик. Уточните материал и правила утилизации.',
-      tip: 'Приложение специализируется на пластике'
-    };
-  } else {
-    // Неопределённо — показываем что видит модель
-    return {
-      found: true,
-      recyclable: null,
-      color: 'orange',
-      verdict: 'Не уверен',
-      name_ru: formatLabel(topLabel),
-      confidence: topConf,
-      instruction: 'Поднесите предмет ближе. Убедитесь что пластиковый предмет хорошо виден на светлом фоне.',
-      tip: 'Лучший результат: пластиковая бутылка или контейнер крупным планом'
-    };
-  }
-}
-
-function formatLabel(label) {
-  // Переводим английские метки на русский
+// ── UI ────────────────────────────────────────────────────────────
+function ruLabel(label) {
   const map = {
-    'water bottle': 'Пластиковая бутылка с водой',
-    'pop bottle': 'Пластиковая бутылка',
-    'bottle': 'Бутылка',
-    'plastic bag': 'Пластиковый пакет',
-    'beer bottle': 'Бутылка',
-    'wine bottle': 'Бутылка',
-    'pill bottle': 'Пластиковый флакон',
-    'lotion': 'Флакон с лосьоном',
-    'container': 'Контейнер',
-    'bucket': 'Ведро',
-    'paper': 'Бумага',
-    'cardboard': 'Картон',
-    'wood': 'Дерево',
-    'glass': 'Стекло',
-    'metal': 'Металл',
+    'water bottle':'Бутылка с водой','pop bottle':'Пластиковая бутылка',
+    'beer bottle':'Бутылка','wine bottle':'Бутылка',
+    'pill bottle':'Флакон','bottle':'Бутылка',
+    'cup':'Стакан','coffee cup':'Одноразовый стакан',
+    'plastic cup':'Одноразовый стакан',
+    'paper cup':'Бумажный стакан','styrofoam':'Пенопласт',
+    'plastic bag':'Пластиковый пакет','bag':'Пакет',
+    'lotion':'Флакон','soap':'Флакон мыла',
+    'container':'Контейнер','bucket':'Ведро',
+    'paper':'Бумага','cardboard':'Картон',
+    'wood':'Дерево','glass':'Стекло','metal':'Металл',
+    'wrapper':'Упаковка','straw':'Трубочка',
   };
-  for (const [en, ru] of Object.entries(map)) {
+  for (const [en,ru] of Object.entries(map)) {
     if (label.includes(en)) return ru;
   }
-  return label.split(',')[0]; // Берём первую часть если не перевели
+  return label.split(',')[0].trim();
 }
 
-function setLoading(on) {
+function setLoad(on, txt) {
   document.getElementById('loading').className = on ? 'loading on' : 'loading';
+  if (txt) document.getElementById('ltxt').textContent = txt;
+}
+function hideAll() {
+  document.getElementById('result').className = 'card result';
+  document.getElementById('ebox').className = 'ebox';
 }
 function showErr(msg) {
-  const el = document.getElementById('errBox');
-  el.textContent = msg; el.className = 'err-box on';
+  const el = document.getElementById('ebox');
+  el.textContent = msg; el.className = 'ebox on';
 }
 
-function showResult(d, previewUrl) {
+function show(d, previewUrl) {
   document.getElementById('result').className = 'card result on';
-  const cls = d.color || 'orange';
-  const icon = d.recyclable === true ? '♻' : d.recyclable === false ? '✕' : '?';
+  const cls = d.color||'orange';
+  const icon = d.recyclable===true ? '♻' : d.recyclable===false ? '✕' : '⚠';
 
-  document.getElementById('resultHead').className = `result-head ${cls}`;
-  document.getElementById('resultIcon').className = `result-icon ${cls}`;
-  document.getElementById('resultIcon').textContent = icon;
-  document.getElementById('verdict').className = `verdict ${cls}`;
-  document.getElementById('verdict').textContent = d.verdict || '';
-  document.getElementById('objName').textContent = d.name_ru || '';
+  document.getElementById('rhead').className  = 'rhead '+cls;
+  document.getElementById('ricon').className  = 'ricon '+cls;
+  document.getElementById('ricon').textContent = icon;
+  document.getElementById('verdict').className = 'verdict '+cls;
+  document.getElementById('verdict').textContent = d.verdict||'';
+  document.getElementById('oname').textContent  = d.name_ru||'';
 
   if (previewUrl) {
-    const img = document.getElementById('preview');
-    img.src = previewUrl; img.className = 'preview-img on';
+    const img = document.getElementById('pimg');
+    img.src = previewUrl; img.className = 'pimg on';
+  } else {
+    document.getElementById('pimg').className = 'pimg';
   }
 
-  let badges = '';
-  if (d.confidence) badges += `<span class="badge badge-conf">Уверенность: ${d.confidence}%</span>`;
-  if (d.recyclable === true) badges += `<span class="badge badge-yes">Перерабатывается</span>`;
-  if (d.recyclable === false) badges += `<span class="badge badge-no">Не перерабатывается</span>`;
-  if (d.recyclable === null) badges += `<span class="badge badge-warn">Уточните вручную</span>`;
-  document.getElementById('badges').innerHTML = badges;
+  let b = '';
+  if (d.confidence) b += `<span class="badge b-conf">${d.confidence}% уверенность</span>`;
+  if (d.recyclable===true)  b += `<span class="badge b-yes">Перерабатывается</span>`;
+  if (d.recyclable===false) b += `<span class="badge b-no">Не перерабатывается</span>`;
+  if (d.recyclable===null)  b += `<span class="badge b-warn">Спец. утилизация</span>`;
+  if (d.source==='gemini')  b += `<span class="badge b-ai">Gemini AI</span>`;
+  document.getElementById('badges').innerHTML = b;
 
-  document.getElementById('infoBox').innerHTML =
-    `<b>${d.found ? 'Что делать' : 'Совет'}</b>${d.instruction || d.message || ''}`;
+  document.getElementById('ibox').innerHTML =
+    `<b>Что делать</b>${d.instruction||d.message||''}`;
 
-  const tip = document.getElementById('tipBox');
-  if (d.tip) { tip.textContent = '💡 ' + d.tip; tip.style.display = 'block'; }
-  else tip.style.display = 'none';
+  const tbox = document.getElementById('tbox');
+  if (d.tip) { tbox.textContent = '💡 '+d.tip; tbox.style.display='block'; }
+  else tbox.style.display='none';
+
+  document.getElementById('src').textContent =
+    d.source==='gemini' ? 'Ответ предоставлен Gemini AI (Google)' : 'Локальный AI · работает офлайн';
 }
 
-// Запускаем загрузку модели сразу
 loadModel();
 </script>
 </body>
