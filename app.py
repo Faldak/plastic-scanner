@@ -44,7 +44,8 @@ def analyze():
             f"https://api-inference.huggingface.co/models/{HF_MODEL}",
             headers=headers,
             data=image_bytes,
-            timeout=20
+            timeout=30
+            stream= false
         )
 
         print(f"HF статус: {response.status_code}")
