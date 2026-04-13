@@ -7,45 +7,111 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-ROBOFLOW_API_KEY = os.environ.get("ROBOFLOW_API_KEY", "")
+ROBOFLOW_API_KEY = os.environ.get("ROBOFLOW_API_KEY", "GPKmLKlpIhdozMQ7STZs")
 ROBOFLOW_MODEL_ID = os.environ.get("ROBOFLOW_MODEL_ID", "garbage-classification-3/2")
 
-ITEM_INFO = {
-    "plastic": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма пластика. Ополоснуть от остатков.", "tip": "Большинство твёрдых пластиковых предметов перерабатываются"},
-    "plastic bottle": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма. Убрать крышку, ополоснуть.", "tip": "Пластиковые бутылки — один из самых часто перерабатываемых материалов"},
-    "bottle": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма. Ополоснуть перед сдачей.", "tip": "Бутылки с маркировкой #1 и #2 принимают везде"},
-    "cardboard": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма бумаги/картона. Сложить плоско.", "tip": "Картон перерабатывается до 7 раз"},
-    "paper": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма макулатуры.", "tip": "Не сдавайте мокрую или жирную бумагу"},
-    "metal": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма металла.", "tip": "Алюминий переплавляется бесконечно без потери качества"},
-    "can": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма. Ополоснуть банку.", "tip": "Из переработанной банки новую делают за 60 дней"},
-    "glass": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма стекла.", "tip": "Стекло перерабатывается бесконечно без потери качества"},
-    "glass bottle": {"recyclable": True, "color": "green", "verdict": "Можно переработать", "instruction": "Сдать в пункт приёма стекла. Убрать крышку.", "tip": "Стеклянные бутылки принимают во многих супермаркетах"},
-    "trash": {"recyclable": False, "color": "red", "verdict": "В обычный мусор", "instruction": "Выбросить в контейнер для смешанных отходов.", "tip": "Если не уверены — лучше в общий мусор, чем загрязнять переработку"},
-    "garbage": {"recyclable": False, "color": "red", "verdict": "В обычный мусор", "instruction": "Выбросить в контейнер для смешанных отходов.", "tip": "Смешанные материалы обычно не перерабатываются"},
-    "styrofoam": {"recyclable": False, "color": "red", "verdict": "В обычный мусор", "instruction": "Выбросить в общий мусор. Пенопласт почти нигде не принимают.", "tip": "Пенопласт (PS #6) — один из самых сложных для переработки материалов"},
-    "plastic bag": {"recyclable": False, "color": "orange", "verdict": "Уточните в вашем городе", "instruction": "В большинстве городов не принимают. Уточните в местном пункте.", "tip": "Некоторые супермаркеты собирают пластиковые пакеты отдельно"},
-    "food waste": {"recyclable": False, "color": "red", "verdict": "В органику или общий мусор", "instruction": "В компост или контейнер для органических отходов.", "tip": "Пищевые отходы можно компостировать дома"},
-    "battery": {"recyclable": True, "color": "orange", "verdict": "Специальная утилизация", "instruction": "Сдать в пункт приёма батареек (есть в супермаркетах).", "tip": "Одна батарейка загрязняет 20 м2 земли — не выбрасывайте в мусор"},
-    "electronics": {"recyclable": True, "color": "orange", "verdict": "Специальная утилизация", "instruction": "Сдать в пункт приёма электроники или сервисный центр.", "tip": "В электронике содержатся ценные металлы и опасные вещества"},
+# Все возможные классы модели -> можно/нельзя переработать
+CLASSES = {
+    # Перерабатываемые
+    "plastic":          (True,  "Пластик"),
+    "plastic bottle":   (True,  "Пластиковая бутылка"),
+    "bottle":           (True,  "Бутылка"),
+    "cardboard":        (True,  "Картон"),
+    "paper":            (True,  "Бумага"),
+    "metal":            (True,  "Металл"),
+    "can":              (True,  "Металлическая банка"),
+    "glass":            (True,  "Стекло"),
+    "glass bottle":     (True,  "Стеклянная бутылка"),
+    "white-glass":      (True,  "Стекло"),
+    "brown-glass":      (True,  "Стекло"),
+    "green-glass":      (True,  "Стекло"),
+    # Не перерабатываемые
+    "trash":            (False, "Мусор"),
+    "garbage":          (False, "Мусор"),
+    "styrofoam":        (False, "Пенопласт"),
+    "foam":             (False, "Пенопласт"),
+    "plastic bag":      (False, "Пластиковый пакет"),
+    "food waste":       (False, "Пищевые отходы"),
+    "biodegradable":    (False, "Органика/биоотходы"),
+    "biological":       (False, "Органика"),
+    "diaper":           (False, "Подгузник"),
+    "cigarette":        (False, "Сигарета"),
+    "textile":          (False, "Текстиль"),
+    # Специальная утилизация
+    "battery":          (None,  "Батарейка"),
+    "electronics":      (None,  "Электроника"),
+    "e-waste":          (None,  "Электроника"),
+    "medicine":         (None,  "Лекарства"),
 }
 
-KEYWORD_MAP = {
-    "plastic": "plastic", "bottle": "bottle", "cardboard": "cardboard",
-    "paper": "paper", "metal": "metal", "can": "can", "glass": "glass",
-    "trash": "trash", "garbage": "garbage", "styrofoam": "styrofoam",
-    "foam": "styrofoam", "bag": "plastic bag", "food": "food waste",
-    "battery": "battery", "electron": "electronics",
+INSTRUCTIONS = {
+    True: {
+        "plastic":        "Сдать в пункт приёма пластика. Ополоснуть от остатков еды.",
+        "plastic bottle": "Убрать крышку, ополоснуть бутылку, сдать в пункт приёма.",
+        "bottle":         "Ополоснуть и сдать в пункт приёма пластика или стекла.",
+        "cardboard":      "Сложить плоско и сдать в пункт приёма картона/бумаги.",
+        "paper":          "Сдать в пункт приёма макулатуры. Не мокрую и не жирную.",
+        "metal":          "Сдать в пункт приёма металла или металлолом.",
+        "can":            "Ополоснуть банку и сдать в пункт приёма металла.",
+        "glass":          "Сдать в пункт приёма стекла. Не смешивать с битым.",
+        "glass bottle":   "Убрать крышку и сдать в пункт приёма стекла.",
+        "white-glass":    "Сдать в пункт приёма стекла.",
+        "brown-glass":    "Сдать в пункт приёма стекла.",
+        "green-glass":    "Сдать в пункт приёма стекла.",
+        "default":        "Сдать в пункт приёма вторсырья.",
+    },
+    False: {
+        "styrofoam":      "Выбросить в общий мусор. Пенопласт почти нигде не принимают.",
+        "plastic bag":    "В большинстве городов не принимают. Уточните локально.",
+        "biodegradable":  "В контейнер для органики или в общий мусор.",
+        "biological":     "В контейнер для органики или в общий мусор.",
+        "food waste":     "В контейнер для органики или компост.",
+        "default":        "Выбросить в контейнер для смешанных отходов.",
+    },
+    None: {
+        "battery":        "Сдать в пункт приёма батареек — они есть в супермаркетах!",
+        "electronics":    "Сдать в пункт приёма электроники или сервисный центр.",
+        "e-waste":        "Сдать в пункт приёма электроники или сервисный центр.",
+        "medicine":       "Сдать в аптеку или специальный пункт утилизации лекарств.",
+        "default":        "Требует специальной утилизации. Уточните в вашем городе.",
+    }
+}
+
+TIPS = {
+    "plastic":        "Твёрдый пластик с маркировкой #1 и #2 принимают везде",
+    "plastic bottle": "Пластиковые бутылки — самый часто перерабатываемый материал",
+    "cardboard":      "Картон перерабатывается до 7 раз",
+    "paper":          "Из 1 тонны макулатуры получают 900 кг новой бумаги",
+    "metal":          "Алюминий переплавляется бесконечно без потери качества",
+    "can":            "Из переработанной банки новую делают всего за 60 дней",
+    "glass":          "Стекло перерабатывается бесконечно без потери качества",
+    "styrofoam":      "Пенопласт (PS #6) — один из самых сложных для переработки",
+    "biodegradable":  "Органику можно компостировать дома или на даче",
+    "battery":        "Одна батарейка загрязняет 20 м² земли — не выбрасывайте в мусор!",
+    "electronics":    "В электронике есть золото, серебро и опасные вещества",
+    "default":        "Сортировка мусора снижает нагрузку на полигоны на 30%",
 }
 
 
-def find_item_info(label):
-    label_lower = label.lower().strip()
-    if label_lower in ITEM_INFO:
-        return ITEM_INFO[label_lower]
-    for keyword, mapped in KEYWORD_MAP.items():
-        if keyword in label_lower:
-            return ITEM_INFO.get(mapped)
-    return None
+def classify(label):
+    key = label.lower().strip()
+    # Точное совпадение
+    if key in CLASSES:
+        return key, CLASSES[key]
+    # Поиск подстроки
+    for k, v in CLASSES.items():
+        if k in key or key in k:
+            return k, v
+    return key, (None, label)
+
+
+def get_instruction(recyclable, key):
+    group = INSTRUCTIONS.get(recyclable, {})
+    return group.get(key, group.get("default", "Уточните в вашем городе."))
+
+
+def get_tip(key):
+    return TIPS.get(key, TIPS["default"])
 
 
 @app.route("/")
@@ -61,16 +127,12 @@ def analyze():
     if not image_b64:
         return jsonify({"error": "Нет изображения"}), 400
 
-    print(f"API KEY: {ROBOFLOW_API_KEY[:8]}..." if ROBOFLOW_API_KEY else "API KEY ПУСТОЙ!")
-    print(f"MODEL ID: {ROBOFLOW_MODEL_ID}")
-
     if not ROBOFLOW_API_KEY:
-        return jsonify({"error": "ROBOFLOW_API_KEY не задан на сервере"}), 500
+        return jsonify({"error": "ROBOFLOW_API_KEY не задан"}), 500
 
     try:
         rf_url = f"https://detect.roboflow.com/{ROBOFLOW_MODEL_ID}"
-        print(f"Запрос к: {rf_url}")
-
+        print(f"→ {rf_url}")
         response = requests.post(
             rf_url,
             params={"api_key": ROBOFLOW_API_KEY},
@@ -78,54 +140,51 @@ def analyze():
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             timeout=15
         )
-
-        print(f"Статус: {response.status_code}")
-        print(f"Ответ: {response.text[:300]}")
+        print(f"Статус: {response.status_code} | {response.text[:200]}")
         response.raise_for_status()
         predictions = response.json()
 
     except Exception as e:
-        print(f"ОШИБКА: {str(e)}")
         print(traceback.format_exc())
-        return jsonify({"error": f"Ошибка: {str(e)}"}), 502
+        return jsonify({"error": f"Ошибка Roboflow: {str(e)}"}), 502
 
     preds = predictions.get("predictions", [])
-    print(f"Предсказаний: {len(preds)}")
 
     if not preds:
         return jsonify({
             "found": False,
-            "message": "Объект не распознан. Поднесите предмет ближе, убедитесь в хорошем освещении."
+            "message": "Объект не распознан. Поднесите предмет ближе и убедитесь в хорошем освещении."
         })
 
     best = max(preds, key=lambda p: p.get("confidence", 0))
-    label = best.get("class", "").strip()
+    raw_label = best.get("class", "").strip()
     confidence = round(best.get("confidence", 0) * 100)
-    print(f"Результат: {label} ({confidence}%)")
+    print(f"Результат: {raw_label} ({confidence}%)")
 
-    info = find_item_info(label)
+    key, (recyclable, name_ru) = classify(raw_label)
+    instruction = get_instruction(recyclable, key)
+    tip = get_tip(key)
 
-    if not info:
-        return jsonify({
-            "found": True,
-            "raw_label": label,
-            "confidence": confidence,
-            "recyclable": None,
-            "color": "orange",
-            "verdict": f"Обнаружен: {label}",
-            "instruction": "Уточните возможность переработки в вашем городе.",
-            "tip": "Если сомневаетесь — выбрасывайте в общий мусор"
-        })
+    if recyclable is True:
+        verdict = "Можно переработать"
+        color = "green"
+    elif recyclable is False:
+        verdict = "Нельзя переработать"
+        color = "red"
+    else:
+        verdict = "Специальная утилизация"
+        color = "orange"
 
     return jsonify({
         "found": True,
-        "raw_label": label,
+        "raw_label": raw_label,
+        "name_ru": name_ru,
         "confidence": confidence,
-        "recyclable": info["recyclable"],
-        "color": info["color"],
-        "verdict": info["verdict"],
-        "instruction": info["instruction"],
-        "tip": info["tip"]
+        "recyclable": recyclable,
+        "color": color,
+        "verdict": verdict,
+        "instruction": instruction,
+        "tip": tip,
     })
 
 
