@@ -338,10 +338,6 @@ async function askGemini() {
     showErr('Напишите что на фото в поле выше — например: "одноразовый пластиковый стакан"');
     return;
   }
-  if (GEMINI_KEY === 'AIzaSyDm0KiTjSuDtF2RuSRzF5v-FVQmF16K8-0') {
-    showErr('Добавьте Gemini API ключ в код. Получите бесплатно на aistudio.google.com/apikey');
-    return;
-  }
 
   setLoad(true,'Спрашиваю Gemini AI...');
   hideAll();
