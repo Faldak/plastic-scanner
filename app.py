@@ -160,6 +160,7 @@ def analyze():
     raw_label = best.get("class", "").strip()
     confidence = round(best.get("confidence", 0) * 100)
     print(f"Результат: {raw_label} ({confidence}%)")
+    print(f"Все предсказания: {[(p.get('class'), round(p.get('confidence',0)*100)) for p in preds]}")
     
 
     key, (recyclable, name_ru) = classify(raw_label)
