@@ -160,12 +160,6 @@ def analyze():
     raw_label = best.get("class", "").strip()
     confidence = round(best.get("confidence", 0) * 100)
     print(f"Результат: {raw_label} ({confidence}%)")
-    # Если уверенность меньше 60% — не показывать
-if confidence < 60:
-    return jsonify({
-        "found": False,
-        "message": f"Не уверен в результате ({confidence}%). Поднесите предмет ближе или улучшите освещение."
-    })
     
 
     key, (recyclable, name_ru) = classify(raw_label)
