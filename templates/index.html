@@ -345,41 +345,42 @@ function showResult(d, previewUrl) {
 
   if (!d.found) {
     cls = 'red'; icon = '?';
-    verdictText = 'Не обнаружено';
+    verdictText = 'Не распознано';
     document.getElementById('plasticName').textContent = d.message || '';
-    document.getElementById('infoBox').innerHTML =
-      '<b>Совет</b>Поднесите камеру ближе к маркировке ♺ на упаковке. Хорошее освещение улучшает точность.';
+    document.getElementById('infoBox').innerHTML = '<b>Совет</b>Поднесите предмет ближе. Хорошее освещение улучшает точность.';
     document.getElementById('tipBox').style.display = 'none';
     document.getElementById('badges').innerHTML = '';
     document.getElementById('preview').className = 'preview-img';
-  } else if (d.code) {
-    cls = d.color;
-    icon = d.recyclable ? '♻' : '🗑';
-    verdictText = d.recyclable ? 'Можно переработать' : 'В обычный мусор';
-    document.getElementById('plasticName').textContent = `${d.name} — ${d.full_name}`;
+  } else {
+    cls = d.color || 'orange';
+    icon = d.recyclable === true ? '♻' : d.recyclable === false ? '🗑' : '?';
+    verdictText = d.verdict || 'Результат';
+    document.getElementById('plasticName').textContent = d.raw_label || '';
 
     document.getElementById('badges').innerHTML =
-      `<span class="badge badge-code">Маркировка #${d.code}</span>` +
-      `<span class="badge badge-conf">Точность ${d.confidence}%</span>` +
-      (d.recyclable
+      `<span class="badge badge-conf">Уверенность: ${d.confidence}%</span>` +
+      (d.recyclable === true
         ? `<span class="badge badge-yes">Перерабатывается</span>`
-        : `<span class="badge badge-no">Не перерабатывается</span>`);
+        : d.recyclable === false
+        ? `<span class="badge badge-no">Не перерабатывается</span>`
+        : `<span class="badge badge-conf">Уточните локально</span>`);
 
     document.getElementById('infoBox').innerHTML =
-      `<b>Что делать</b>${d.instruction}<br><br><b>Встречается в</b>${d.examples}`;
+      `<b>Что делать</b>${d.instruction || ''}`;
 
     const tip = document.getElementById('tipBox');
-    tip.textContent = '💡 ' + d.tip;
-    tip.style.display = 'block';
+    if (d.tip) {
+      tip.textContent = '💡 ' + d.tip;
+      tip.style.display = 'block';
+    } else {
+      tip.style.display = 'none';
+    }
 
     const prev = document.getElementById('preview');
-    if (previewUrl) { prev.src = previewUrl; prev.className = 'preview-img on'; }
-  } else {
-    cls = 'orange'; icon = '?';
-    verdictText = 'Распознан объект';
-    document.getElementById('plasticName').textContent = d.message || '';
-    document.getElementById('infoBox').innerHTML = '<b>Совет</b>Уточните маркировку вручную.';
-    document.getElementById('tipBox').style.display = 'none';
+    if (previewUrl) {
+      prev.src = previewUrl;
+      prev.className = 'preview-img on';
+    }
   }
 
   document.getElementById('resultHead').className = `result-head ${cls}`;
