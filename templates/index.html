@@ -170,8 +170,7 @@ footer{text-align:center;font-size:11px;color:#252830;padding:4px}
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
 <script>
 // ── Получите ключ бесплатно на aistudio.google.com/apikey ──
-const GEMINI_KEY = 'AIzaSyBPcd0ECFvXV06dxOCmEGuSk6XD4PE4ioc';
-
+const GROQ_KEY = 'ВСТАВЬТЕ_ВАШ_GROQ_КЛЮЧ_СЮДА';
 let tfModel = null;
 let lastPreview = null;
 
@@ -339,7 +338,7 @@ async function askGemini() {
     return;
   }
 
-  setLoad(true,'Спрашиваю Gemini AI...');
+  setLoad(true, 'Спрашиваю Groq AI...');
   hideAll();
 
   const prompt = `Ты эксперт по переработке мусора. Пользователь хочет знать можно ли переработать: "${text}"
@@ -352,50 +351,42 @@ async function askGemini() {
   "name_ru": "Точное название предмета",
   "instruction": "Конкретная инструкция что делать с этим предметом (1-2 предложения)",
   "tip": "Полезный факт об этом материале (1 предложение)"
-}
-
-Примеры правильных ответов:
-- Пластиковая бутылка PET → recyclable: true, verdict: "Можно переработать"
-- Одноразовый стакан → recyclable: false, verdict: "Нельзя переработать"
-- Пенопласт → recyclable: false, verdict: "Нельзя переработать"  
-- Пластиковый пакет → recyclable: false, verdict: "Нельзя переработать"
-- Картонная коробка → recyclable: true, verdict: "Можно переработать"
-- Стеклянная бутылка → recyclable: true, verdict: "Можно переработать"
-- Батарейка → recyclable: null, verdict: "Специальная утилизация"
-- Металлическая банка → recyclable: true, verdict: "Можно переработать"`;
+}`;
 
   try {
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          contents:[{parts:[{text:prompt}]}],
-          generationConfig:{maxOutputTokens:400, temperature:0.1}
-        })
-      }
-    );
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 400,
+        temperature: 0.1
+      })
+    });
 
     if (!resp.ok) {
       const err = await resp.json();
-      throw new Error(err.error?.message || 'Ошибка '+resp.status);
+      throw new Error(err.error?.message || 'Ошибка ' + resp.status);
     }
 
     const data = await resp.json();
-    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    const clean = raw.replace(/```json|```/g,'').trim();
+    const raw = data.choices?.[0]?.message?.content || '';
+    const clean = raw.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
-    parsed.source = 'gemini';
+    parsed.source = 'gemini'; // оставляем для badge "AI"
     parsed.found = true;
-    parsed.confidence = 98;
+    parsed.confidence = 97;
 
     setLoad(false);
     show(parsed, lastPreview);
 
-  } catch(e) {
+  } catch (e) {
     setLoad(false);
-    showErr('Ошибка Gemini: ' + e.message + '. Проверьте API ключ.');
+    showErr('Ошибка Groq: ' + e.message + '. Проверьте API ключ.');
   }
 }
 
