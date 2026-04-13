@@ -101,8 +101,8 @@ def analyze():
         return jsonify({"error": "ROBOFLOW_API_KEY не задан на сервере"}), 500
 
     try:
-        # Отправляем в Roboflow Serverless API
-        rf_url = f"https://serverless.roboflow.com/{ROBOFLOW_MODEL_ID}"
+        # Правильный URL для object detection
+        rf_url = f"https://detect.roboflow.com/{ROBOFLOW_MODEL_ID}"
         response = requests.post(
             rf_url,
             params={"api_key": ROBOFLOW_API_KEY},
@@ -114,37 +114,32 @@ def analyze():
         predictions = response.json()
 
     except requests.exceptions.Timeout:
-        return jsonify({"error": "Roboflow не ответил за 15 секунд. Попробуйте ещё раз."}), 504
+        return jsonify({"error": "Roboflow не ответил за 15 секунд."}), 504
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Ошибка запроса к Roboflow: {str(e)}"}), 502
 
-    # Парсим результат
     preds = predictions.get("predictions", [])
 
     if not preds:
         return jsonify({
             "found": False,
-            "message": "Маркировка пластика не обнаружена. Наведите камеру ближе на треугольник со стрелками."
+            "message": "Маркировка не обнаружена. Наведите ближе на знак ♺."
         })
 
-    # Берём предсказание с наибольшей уверенностью
     best = max(preds, key=lambda p: p.get("confidence", 0))
     label = best.get("class", "").strip()
     confidence = round(best.get("confidence", 0) * 100)
 
-    # Ищем по номеру (метка может быть "1", "PET", "resin-1" и т.д.)
     plastic_key = None
     for key in PLASTIC_INFO:
-        if key in label or label.upper() in ["PET", "PETE", "HDPE", "PVC", "LDPE", "PP", "PS"]:
-            if label == key:
-                plastic_key = key
-                break
-            name = PLASTIC_INFO[key]["name"].upper()
-            if label.upper() in name or name.split("/")[0].strip() == label.upper():
-                plastic_key = key
-                break
+        if label == key:
+            plastic_key = key
+            break
+        name = PLASTIC_INFO[key]["name"].upper()
+        if label.upper() in name or name.split("/")[0].strip() == label.upper():
+            plastic_key = key
+            break
 
-    # Запасной поиск по цифре в метке
     if not plastic_key:
         for char in label:
             if char in PLASTIC_INFO:
@@ -156,7 +151,7 @@ def analyze():
             "found": True,
             "raw_label": label,
             "confidence": confidence,
-            "message": f"Обнаружен объект '{label}', но тип пластика не распознан. Уточните маркировку вручную."
+            "message": f"Обнаружен '{label}', но тип пластика не распознан."
         })
 
     info = PLASTIC_INFO[plastic_key]
@@ -173,7 +168,6 @@ def analyze():
         "confidence": confidence,
         "raw_label": label
     })
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
