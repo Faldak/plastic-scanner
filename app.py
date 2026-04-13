@@ -45,7 +45,7 @@ def analyze():
             headers=headers,
             data=image_bytes,
             timeout=30
-            stream= false
+            stream=False
         )
 
         print(f"HF статус: {response.status_code}")
