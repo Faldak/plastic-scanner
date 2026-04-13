@@ -13,7 +13,7 @@ ROBOFLOW_API_KEY = os.environ.get("ROBOFLOW_API_KEY", "GPKmLKlpIhdozMQ7STZs")
 # https://universe.roboflow.com/swu-deep-learning-project/plastic-recycling-code
 ROBOFLOW_MODEL_ID = os.environ.get(
     "ROBOFLOW_MODEL_ID",
-    " trash-3ydki/2"   # замените на ID вашей модели из Universe
+    " garbage-classification-3/2"   # замените на ID вашей модели из Universe
 )
 
 # База знаний по всем типам пластика
