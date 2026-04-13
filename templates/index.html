@@ -338,7 +338,7 @@ async function askGemini() {
     showErr('Напишите что на фото в поле выше — например: "одноразовый пластиковый стакан"');
     return;
   }
-  if (GEMINI_KEY === 'ВСТАВЬТЕ_КЛЮЧ_СЮДА') {
+  if (GEMINI_KEY === 'AIzaSyDm0KiTjSuDtF2RuSRzF5v-FVQmF16K8-0') {
     showErr('Добавьте Gemini API ключ в код. Получите бесплатно на aistudio.google.com/apikey');
     return;
   }
@@ -370,7 +370,7 @@ async function askGemini() {
 
   try {
     const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
       {
         method:'POST',
         headers:{'Content-Type':'application/json'},
