@@ -91,18 +91,24 @@ def index():
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
+    import traceback
+    
     data = request.json
     image_b64 = data.get("image")
 
     if not image_b64:
         return jsonify({"error": "Нет изображения"}), 400
 
+    print(f"API KEY: {ROBOFLOW_API_KEY[:8]}..." if ROBOFLOW_API_KEY else "API KEY ПУСТОЙ!")
+    print(f"MODEL ID: {ROBOFLOW_MODEL_ID}")
+
     if not ROBOFLOW_API_KEY:
-        return jsonify({"error": "ROBOFLOW_API_KEY не задан на сервере"}), 500
+        return jsonify({"error": "ROBOFLOW_API_KEY не задан"}), 500
 
     try:
-        # Правильный URL для object detection
         rf_url = f"https://detect.roboflow.com/{ROBOFLOW_MODEL_ID}"
+        print(f"Запрос к: {rf_url}")
+
         response = requests.post(
             rf_url,
             params={"api_key": ROBOFLOW_API_KEY},
@@ -110,13 +116,17 @@ def analyze():
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             timeout=15
         )
+        
+        print(f"Статус ответа: {response.status_code}")
+        print(f"Тело ответа: {response.text[:500]}")
+        
         response.raise_for_status()
         predictions = response.json()
 
-    except requests.exceptions.Timeout:
-        return jsonify({"error": "Roboflow не ответил за 15 секунд."}), 504
-    except requests.exceptions.RequestException as e:
-        return jsonify({"error": f"Ошибка запроса к Roboflow: {str(e)}"}), 502
+    except Exception as e:
+        print(f"ОШИБКА: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({"error": f"Ошибка: {str(e)}"}), 502
 
     preds = predictions.get("predictions", [])
 
@@ -151,7 +161,7 @@ def analyze():
             "found": True,
             "raw_label": label,
             "confidence": confidence,
-            "message": f"Обнаружен '{label}', но тип пластика не распознан."
+            "message": f"Обнаружен '{label}', но тип не распознан."
         })
 
     info = PLASTIC_INFO[plastic_key]
@@ -168,7 +178,6 @@ def analyze():
         "confidence": confidence,
         "raw_label": label
     })
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
