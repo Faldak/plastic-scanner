@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 ROBOFLOW_API_KEY = os.environ.get("ROBOFLOW_API_KEY", "GPKmLKlpIhdozMQ7STZs")
-ROBOFLOW_MODEL_ID = os.environ.get("ROBOFLOW_MODEL_ID", "taco-trash-annotations-in-context/4")
+ROBOFLOW_MODEL_ID = os.environ.get("ROBOFLOW_MODEL_ID", "trash-3ydki/2")
 
 # Все возможные классы модели -> можно/нельзя переработать
 CLASSES = {
